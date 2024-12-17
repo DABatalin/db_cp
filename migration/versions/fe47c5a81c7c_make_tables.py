@@ -1,8 +1,8 @@
 """make tables
 
-Revision ID: 2cc7bed4c0ae
+Revision ID: fe47c5a81c7c
 Revises: 
-Create Date: 2024-12-13 06:05:17.246172
+Create Date: 2024-12-13 15:13:01.240707
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision: str = '2cc7bed4c0ae'
+revision: str = 'fe47c5a81c7c'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -67,6 +67,15 @@ def upgrade() -> None:
                existing_type=postgresql.TIMESTAMP(),
                nullable=False,
                existing_server_default=sa.text('now()'))
+    op.alter_column('userlogs', 'created_at',
+               existing_type=postgresql.TIMESTAMP(),
+               nullable=False,
+               existing_server_default=sa.text('now()'))
+    op.alter_column('userlogs', 'updated_at',
+               existing_type=postgresql.TIMESTAMP(),
+               nullable=False,
+               existing_server_default=sa.text('now()'))
+    op.drop_constraint('userlogs_user_id_fkey', 'userlogs', type_='foreignkey')
     op.alter_column('users', 'created_at',
                existing_type=postgresql.TIMESTAMP(),
                nullable=False,
@@ -85,6 +94,15 @@ def downgrade() -> None:
                nullable=True,
                existing_server_default=sa.text('now()'))
     op.alter_column('users', 'created_at',
+               existing_type=postgresql.TIMESTAMP(),
+               nullable=True,
+               existing_server_default=sa.text('now()'))
+    op.create_foreign_key('userlogs_user_id_fkey', 'userlogs', 'users', ['user_id'], ['id'], ondelete='CASCADE')
+    op.alter_column('userlogs', 'updated_at',
+               existing_type=postgresql.TIMESTAMP(),
+               nullable=True,
+               existing_server_default=sa.text('now()'))
+    op.alter_column('userlogs', 'created_at',
                existing_type=postgresql.TIMESTAMP(),
                nullable=True,
                existing_server_default=sa.text('now()'))

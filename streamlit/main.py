@@ -88,7 +88,7 @@ def show_tables():
 
     headers = {"Authorization": f"Bearer {token}"}
 
-    tables = ["films", "categorys", "filmcategorys"]
+    tables = ["films", "categorys", "filmcategorys", "filmdirectors", "directors", "actors", "filmgrades"]
     selected_table = st.selectbox("Выберите таблицу", tables)
 
     if st.button("Загрузить данные"):
@@ -135,7 +135,7 @@ def edit_tables():
         st.warning("У вас недостаточно прав для редактирования таблиц.")
         return
 
-    tables = ["films", "categorys", "filmcategorys", "users", "filmdirectors", "directors", "actors", "filmgrades", "favoritefilms", "comments"]
+    tables = ["films", "categorys", "filmcategorys", "users", "filmdirectors", "directors", "actors", "filmgrades", "favoritefilms"]
     m2m_tables = ["filmcategorys", "filmdirectors", "filmactors", "filmgrades", "favoritefilms"]
     selected_table = st.selectbox("Выберите таблицу для редактирования", tables)
 

@@ -14,6 +14,7 @@ from app.filmactors.models import FilmActor
 from app.users.models import User
 from app.filmgrades.models import FilmGrade
 from app.favoritefilms.models import FavoriteFilm
+from app.userlogs.models import UserLog
 
 import asyncio
 from logging.config import fileConfig

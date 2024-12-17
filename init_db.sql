@@ -89,3 +89,14 @@ CREATE TABLE filmgrades (
     CONSTRAINT fk_film FOREIGN KEY (film_id) REFERENCES films (id) ON DELETE CASCADE,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE userlogs (
+    log_id SERIAL PRIMARY KEY,  -- Уникальный идентификатор записи
+    user_id INT NOT NULL,  -- Идентификатор пользователя
+    login_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,  -- Дата и время входа
+    operation_status VARCHAR(50) NOT NULL DEFAULT 'Вход',  -- Статус операции (в данном случае всегда 'Вход')
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT now(),
+    updated_at TIMESTAMP DEFAULT now()
+);
